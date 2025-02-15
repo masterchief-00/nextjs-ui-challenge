@@ -14,3 +14,10 @@ declare type CurrentUserProps = {
   names: string;
   photo: string;
 };
+
+declare type MessageBriefProps = {
+  names: string;
+  message: string;
+  timestamp: string;
+  photo: string;
+};
