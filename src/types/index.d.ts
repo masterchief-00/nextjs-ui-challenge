@@ -29,3 +29,18 @@ declare type MessageFullProps = {
   tag: string;
   names: string;
 };
+
+declare type Message = {
+  id: string;
+  user_id: string;
+  content: string;
+  timestamp: string;
+  tag: string;
+  user: {
+    names: string;
+    user_name: string;
+    photo: string;
+  };
+};
+
+declare type SortedMessage = { category: string | null; message: Message };

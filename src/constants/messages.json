@@ -1,0 +1,110 @@
+[
+  {
+    "id": "6e872f0e-33ce-4cac-8322-93b0cf07ffd5",
+    "user_id": "b47fbef6-1ef9-4d9e-bf10-9913d68aef14",
+    "content": "Hey everyone! Excited to be here. 😊",
+    "timestamp": "2025-02-15T10:30:00.000Z",
+    "tag": "greeting",
+    "user": {
+      "names": "Colleen Shane",
+      "user_name": "shanecoll22",
+      "photo": "/a2.jpg"
+    }
+  },
+  {
+    "id": "840a82a0-6005-4443-9120-76ace9103736",
+    "user_id": "467104ae-63a7-4457-ab65-c9189a6aaab7",
+    "content": "Does anyone have the latest project update?",
+    "timestamp": "2025-02-15T09:30:00.000Z",
+    "tag": "question",
+    "user": {
+      "names": "Max Cleen",
+      "user_name": "max00",
+      "photo": "/a3.jpg"
+    }
+  },
+  {
+    "id": "80b8280e-941b-4206-a83c-c3ed8fecdb95",
+    "user_id": "b88dfc30-45be-4412-8137-ff7b66691d90",
+    "content": "Sure! I’ll share it in a bit. 👍",
+    "timestamp": "2025-02-15T08:30:00.000Z",
+    "tag": "response",
+    "user": {
+      "names": "Soham Jane",
+      "user_name": "janeSoh22",
+      "photo": "/a4.jpg"
+    }
+  },
+  {
+    "id": "99038d18-704a-4b9a-bab0-756e040cdd04",
+    "user_id": "664621b9-73b8-4ba1-b654-aa9eb08ddd98",
+    "content": "Meeting at 3 PM today. Don’t miss it!",
+    "timestamp": "2025-02-15T10:00:00.000Z",
+    "tag": "reminder",
+    "user": {
+      "names": "Kristin John",
+      "user_name": "johnnyKris56",
+      "photo": "/a5.jpg"
+    }
+  },
+  {
+    "id": "c039b601-5684-496e-abef-a2ae7dbbbdc8",
+    "user_id": "6d496ea7-6b8f-4e61-8bdb-3ec18c926407",
+    "content": "Great work on the new design! Looks amazing.",
+    "timestamp": "2025-02-15T08:45:00.000Z",
+    "tag": "compliment",
+    "user": {
+      "names": "Eduardo Jenkins",
+      "user_name": "jenkinsed79",
+      "photo": "/a9.jpg"
+    }
+  },
+  {
+    "id": "288c7633-7441-43d9-9105-68c3d84ed97e",
+    "user_id": "72026291-e1d0-4d4d-9faa-d98fc4352578",
+    "content": "I'll handle the documentation updates today.",
+    "timestamp": "2025-02-14T08:00:00.000Z",
+    "tag": "status",
+    "user": {
+      "names": "Dainne Kroenke",
+      "user_name": "kroe567",
+      "photo": "/a6.jpg"
+    }
+  },
+  {
+    "id": "deee5d1c-89b8-4091-9543-b639bd090eb9",
+    "user_id": "ddca3314-b86f-4502-8684-97a75fa18f19",
+    "content": "Does anyone know the client’s feedback?",
+    "timestamp": "2025-02-14T09:10:00.000Z",
+    "tag": "inquiry",
+    "user": {
+      "names": "Arlene Glazer",
+      "user_name": "leneglazer2",
+      "photo": "/a7.jpg"
+    }
+  },
+  {
+    "id": "2b5277d1-3938-400f-913e-151b6f5cb2ee",
+    "user_id": "7dcf4792-13d4-4fa1-b281-1596b169c03a",
+    "content": "Here’s the file you asked for: [link]",
+    "timestamp": "2025-02-14T09:50:00.000Z",
+    "tag": "file",
+    "user": {
+      "names": "Shane McDane",
+      "user_name": "mcdaneshane032",
+      "photo": "/a8.jpg"
+    }
+  },
+  {
+    "id": "859d6326-eadd-464e-9898-e40e4df5677c",
+    "user_id": "e3e7fe67-ae97-4396-acd4-5fc344570289",
+    "content": "Good morning, everyone! Let's have a productive day.",
+    "timestamp": "2025-02-14T07:30:00.000Z",
+    "tag": "greeting",
+    "user": {
+      "names": "Naimur Rahman",
+      "user_name": "naimurman09",
+      "photo": "/a1.jpg"
+    }
+  }
+]
