@@ -42,7 +42,7 @@ export const Sidebar = () => {
           </p>
           <button className="flex flex-row items-center gap-3 p-3 justify-center w-full rounded-lg bg-[rgba(255,255,255,0.08)] border-[0.5px] border-border_main hover:bg-gradient-to-b from-[rgba(75,231,182,0.01)] via-[rgba(47,237,212,0.08)] to-[rgba(81,213,218,0.18)]">
             <RiSparkling2Fill color="greenyellow" size={20} />
-            <label>Upgrade Pro</label>
+            Upgrade Pro
           </button>
         </div>
         <CurrentUser names="Naimur Rahman" photo={"/a1.jpg"} />

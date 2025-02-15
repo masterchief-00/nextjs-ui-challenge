@@ -13,6 +13,7 @@ export default {
         background_var_01: "rgba(255,255,255,0.08)",
         foreground: "var(--foreground)",
         border_main: "rgba(140,140,140,0.5)",
+        secondary_text: "rgba(255,255,255,0.6)",
       },
     },
   },

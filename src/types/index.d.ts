@@ -21,3 +21,11 @@ declare type MessageBriefProps = {
   timestamp: string;
   photo: string;
 };
+
+declare type MessageFullProps = {
+  photo: string;
+  timestamp: string;
+  message: string;
+  tag: string;
+  names: string;
+};

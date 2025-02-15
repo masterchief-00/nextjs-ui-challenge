@@ -19,7 +19,7 @@ export const MessageBrief = ({
       <div className="flex flex-col gap-2 w-full">
         <div className="flex flex-row justify-between items-center w-full">
           <label>{names.split(" ")[0] ?? names}</label>
-          <label className="text-xs">{timestamp}</label>
+          <label className="text-xs text-secondary_text">{timestamp}</label>
         </div>
         <label className="text-xs">{trimMessage(message, 30)}</label>
       </div>
