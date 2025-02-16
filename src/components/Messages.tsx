@@ -7,9 +7,12 @@ import React, { useEffect, useState } from "react";
 import { toggleSidebar } from "@/lib/features/sidebar/sidebarSlice";
 import { FaChevronRight } from "react-icons/fa";
 import messages from "@/constants/messages.json";
+import { formatTime, retrieveMessagesByCategory } from "@/lib/Utils";
+import { setCurrentChat } from "@/lib/features/messages/loadChatSlice";
 
 export const Messages = () => {
   const sidebarOpen = useAppSelector((state) => state.sidebarOpener.open);
+  const activeChat = useAppSelector((state) => state.activeChat.currentChat);
   const dispatch = useAppDispatch();
   const categories: (keyof typeof categoryCount)[] = [
     "Today",
@@ -28,6 +31,20 @@ export const Messages = () => {
 
   const handleToggle = () => {
     dispatch(toggleSidebar());
+  };
+
+  const loadChat = (selectedChat: Message) => {
+    dispatch(
+      setCurrentChat({
+        id: selectedChat.id,
+        photo: selectedChat.user.photo,
+        names: selectedChat.user.names,
+        handle: selectedChat.user.user_name,
+        tag: selectedChat.tag,
+        timestamp: selectedChat.timestamp,
+        content: selectedChat.content,
+      })
+    );
   };
 
   const sortMessagesByCategories = (messages: Message[]) => {
@@ -71,24 +88,11 @@ export const Messages = () => {
     setCategoryCounter(categoriesCounter);
   };
 
-  const retrieveMessagesByCategory = (category: string) => {
-    let messagesFound = [];
-
-    for (const message of messagesByCategory) {
-      if (message.category === category) messagesFound.push(message);
+  useEffect(() => {
+    if (messagesByCategory.length > 0) {
+      loadChat(messagesByCategory[0].message);
     }
-
-    return messagesFound;
-  };
-
-  const formatTime = (timestamp: string): string => {
-    const date = new Date(timestamp);
-    return date.toLocaleTimeString([], {
-      hour: "numeric",
-      minute: "2-digit",
-      hour12: true,
-    });
-  };
+  }, [messagesByCategory]);
 
   useEffect(() => {
     sortMessagesByCategories(messages);
@@ -127,15 +131,19 @@ export const Messages = () => {
               <React.Fragment key={category}>
                 <TimeSeparator day={category} />
                 <div className="flex flex-col w-full gap-2 justify-center">
-                  {retrieveMessagesByCategory(category).map((message) => (
-                    <MessageBrief
-                      key={message.message.id}
-                      photo={message.message.user.photo}
-                      names={message.message.user.names}
-                      timestamp={formatTime(message.message.timestamp)}
-                      message={message.message.content}
-                    />
-                  ))}
+                  {retrieveMessagesByCategory(category, messagesByCategory).map(
+                    (message) => (
+                      <MessageBrief
+                        key={message.message.id}
+                        photo={message.message.user.photo}
+                        names={message.message.user.names}
+                        timestamp={formatTime(message.message.timestamp)}
+                        message={message.message.content}
+                        isActive={activeChat.id === message.message.id}
+                        handleChatLoad={() => loadChat(message.message)}
+                      />
+                    )
+                  )}
                 </div>
               </React.Fragment>
             )

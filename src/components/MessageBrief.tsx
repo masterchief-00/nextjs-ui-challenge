@@ -6,9 +6,18 @@ export const MessageBrief = ({
   message,
   timestamp,
   photo,
+  isActive,
+  handleChatLoad,
 }: MessageBriefProps) => {
   return (
-    <div className="flex flex-row w-full gap-3 bg-background_var_01 px-2 py-3 rounded-lg border-[0.5px] border-border_main">
+    <div
+      onClick={handleChatLoad}
+      className={`flex flex-row w-full gap-3 px-2 py-3 rounded-lg border-border_main hover:cursor-pointer hover:bg-gradient-to-r from-[rgba(75,231,182,0.01)] via-[rgba(47,237,212,0.08)] to-[rgba(81,213,218,0.18)] ${
+        isActive
+          ? "bg-gradient-to-r from-[rgba(52,158,124,0.01)] via-[rgba(34,174,156,0.08)] to-[rgba(58,154,158,0.18)] border-[1.5px]"
+          : "bg-background_var_01 border-[0.5px]"
+      }`}
+    >
       <Image
         src={photo}
         width={36}
