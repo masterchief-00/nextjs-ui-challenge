@@ -2,10 +2,120 @@ import { BiMessageSquareAdd } from "react-icons/bi";
 import { IoSearch } from "react-icons/io5";
 import { TimeSeparator } from "./ui/TimeSeparator";
 import { MessageBrief } from "./MessageBrief";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import React, { useEffect, useState } from "react";
+import { toggleSidebar } from "@/lib/features/sidebar/sidebarSlice";
+import { FaChevronRight } from "react-icons/fa";
+import messages from "@/constants/messages.json";
+import { formatTime, retrieveMessagesByCategory } from "@/lib/Utils";
+import { setCurrentChat } from "@/lib/features/messages/loadChatSlice";
 
 export const Messages = () => {
+  const sidebarOpen = useAppSelector((state) => state.sidebarOpener.open);
+  const activeChat = useAppSelector((state) => state.activeChat.currentChat);
+  const dispatch = useAppDispatch();
+
+  const [messagesLoaded, setMessagesLoaded] = useState(false);
+  const categories: (keyof typeof categoryCount)[] = [
+    "Today",
+    "Yesterday",
+    "Older",
+  ];
+
+  const [categoryCount, setCategoryCounter] = useState({
+    Today: 0,
+    Yesterday: 0,
+    Older: 0,
+  });
+  const [messagesByCategory, setMessagesByCategory] = useState<SortedMessage[]>(
+    []
+  );
+
+  const handleToggle = () => {
+    dispatch(toggleSidebar());
+  };
+
+  const loadChat = (selectedChat: Message) => {
+    dispatch(
+      setCurrentChat({
+        id: selectedChat.id,
+        photo: selectedChat.user.photo,
+        names: selectedChat.user.names,
+        handle: selectedChat.user.user_name,
+        tag: selectedChat.tag,
+        timestamp: selectedChat.timestamp,
+        content: selectedChat.content,
+      })
+    );
+  };
+
+  const sortMessagesByCategories = (messages: Message[]) => {
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    let sortedMessages = [];
+
+    const lastWeek = new Date(today);
+    lastWeek.setDate(lastWeek.getDate() - 7);
+
+    let categoriesCounter = {
+      Today: 0,
+      Yesterday: 0,
+      Older: 0,
+    };
+
+    for (const message of messages) {
+      let messageDate = new Date(message.timestamp);
+
+      let obj: SortedMessage = {
+        category: null,
+        message,
+      };
+
+      if (messageDate >= today) {
+        obj.category = "Today";
+        categoriesCounter.Today += 1;
+      } else if (messageDate >= yesterday) {
+        obj.category = "Yesterday";
+        categoriesCounter.Yesterday += 1;
+      } else {
+        obj.category = "Older";
+        categoriesCounter.Older += 1;
+      }
+      sortedMessages.push(obj);
+    }
+    setMessagesByCategory(sortedMessages);
+    setCategoryCounter(categoriesCounter);
+  };
+
+  useEffect(() => {
+    if (messagesByCategory.length > 0) {
+      loadChat(messagesByCategory[0].message);
+    }
+  }, [messagesByCategory]);
+
+  useEffect(() => {
+    if (messages) {
+      setMessagesLoaded(true);
+      sortMessagesByCategories(messages);
+    }
+  }, []);
+
   return (
     <div className="flex flex-col w-[28%] pt-4 px-4 gap-3 border-r-[0.5px] border-[rgba(255,255,255,0.4)]">
+      {!sidebarOpen && (
+        <div className="absolute left-0 top-28 z-10">
+          <button
+            onClick={handleToggle}
+            className="flex justify-center items-center p-1 rounded-tr-full rounded-br-full border-l-0 border-[0.5px] border-border_main"
+          >
+            <FaChevronRight color="white" size={25} />
+          </button>
+        </div>
+      )}
+
       <div className="flex flex-row justify-between items-center">
         <label>Message</label>
         <button className="flex justify-center items-center p-2 rounded-full border-[0.5px] border-border_main">
@@ -20,61 +130,35 @@ export const Messages = () => {
         />
       </div>
       <div className="flex flex-col gap-2 overflow-y-auto">
-        <TimeSeparator day="Today" />
-        <div className="flex flex-col w-full gap-2 justify-center">
-          <MessageBrief
-            photo="/a2.jpg"
-            names="Colleen Shane"
-            timestamp="03:54 PM"
-            message="Lorem ipsum dolor sit amet consectetur adipisicing elit. A animi provident possimus minus, inventore doloremque hic quibusdam sed, fuga et architecto assumenda obcaecati eos? Minus magni sequi ab nam deserunt!"
-          />
-          <MessageBrief
-            photo="/a3.jpg"
-            names="Max Cleen"
-            timestamp="03:54 PM"
-            message="Lorem ipsum dolor sit amet consectetur adipisicing elit. A animi provident possimus minus, inventore doloremque hic quibusdam sed, fuga et architecto assumenda obcaecati eos? Minus magni sequi ab nam deserunt!"
-          />
-          <MessageBrief
-            photo="/a4.jpg"
-            names="Soham Jane"
-            timestamp="03:54 PM"
-            message="Lorem ipsum dolor sit amet consectetur adipisicing elit. A animi provident possimus minus, inventore doloremque hic quibusdam sed, fuga et architecto assumenda obcaecati eos? Minus magni sequi ab nam deserunt!"
-          />
-          <MessageBrief
-            photo="/a5.jpg"
-            names="Kristin John"
-            timestamp="03:54 PM"
-            message="Lorem ipsum dolor sit amet consectetur adipisicing elit. A animi provident possimus minus, inventore doloremque hic quibusdam sed, fuga et architecto assumenda obcaecati eos? Minus magni sequi ab nam deserunt!"
-          />
-          <MessageBrief
-            photo="/a9.jpg"
-            names="Eduardo Jenkins"
-            timestamp="03:54 PM"
-            message="Lorem ipsum dolor sit amet consectetur adipisicing elit. A animi provident possimus minus, inventore doloremque hic quibusdam sed, fuga et architecto assumenda obcaecati eos? Minus magni sequi ab nam deserunt!"
-          />
-
-          <TimeSeparator day="Yesterday" />
-
-          <MessageBrief
-            photo="/a6.jpg"
-            names="Dainne Kroenke"
-            timestamp="03:54 PM"
-            message="Lorem ipsum dolor sit amet consectetur adipisicing elit. A animi provident possimus minus, inventore doloremque hic quibusdam sed, fuga et architecto assumenda obcaecati eos? Minus magni sequi ab nam deserunt!"
-          />
-          <MessageBrief
-            photo="/a7.jpg"
-            names="Arlene Glazer"
-            timestamp="03:54 PM"
-            message="Lorem ipsum dolor sit amet consectetur adipisicing elit. A animi provident possimus minus, inventore doloremque hic quibusdam sed, fuga et architecto assumenda obcaecati eos? Minus magni sequi ab nam deserunt!"
-          />
-          <MessageBrief
-            photo="/a8.jpg"
-            names="Shane McDane"
-            timestamp="03:54 PM"
-            message="Lorem ipsum dolor sit amet consectetur adipisicing elit. A animi provident possimus minus, inventore doloremque hic quibusdam sed, fuga et architecto assumenda obcaecati eos? Minus magni sequi ab nam deserunt!"
-          />
-          <div className="w-full my-3" />
-        </div>
+        {!messagesLoaded && (
+          <div className="flex flex-col justify-center w-full">
+            <label className="text-center">Loading chats...</label>
+          </div>
+        )}
+        {categories.map(
+          (category) =>
+            categoryCount[category] > 0 && (
+              <React.Fragment key={category}>
+                <TimeSeparator day={category} />
+                <div className="flex flex-col w-full gap-2 justify-center">
+                  {retrieveMessagesByCategory(category, messagesByCategory).map(
+                    (message) => (
+                      <MessageBrief
+                        key={message.message.id}
+                        photo={message.message.user.photo}
+                        names={message.message.user.names}
+                        timestamp={formatTime(message.message.timestamp)}
+                        message={message.message.content}
+                        isActive={activeChat.id === message.message.id}
+                        handleChatLoad={() => loadChat(message.message)}
+                      />
+                    )
+                  )}
+                </div>
+              </React.Fragment>
+            )
+        )}
+        <div className="w-full my-3" />
       </div>
     </div>
   );
