@@ -14,6 +14,8 @@ export const Messages = () => {
   const sidebarOpen = useAppSelector((state) => state.sidebarOpener.open);
   const activeChat = useAppSelector((state) => state.activeChat.currentChat);
   const dispatch = useAppDispatch();
+
+  const [messagesLoaded, setMessagesLoaded] = useState(false);
   const categories: (keyof typeof categoryCount)[] = [
     "Today",
     "Yesterday",
@@ -95,7 +97,10 @@ export const Messages = () => {
   }, [messagesByCategory]);
 
   useEffect(() => {
-    sortMessagesByCategories(messages);
+    if (messages) {
+      setMessagesLoaded(true);
+      sortMessagesByCategories(messages);
+    }
   }, []);
 
   return (
@@ -125,6 +130,11 @@ export const Messages = () => {
         />
       </div>
       <div className="flex flex-col gap-2 overflow-y-auto">
+        {!messagesLoaded && (
+          <div className="flex flex-col justify-center w-full">
+            <label className="text-center">Loading chats...</label>
+          </div>
+        )}
         {categories.map(
           (category) =>
             categoryCount[category] > 0 && (
